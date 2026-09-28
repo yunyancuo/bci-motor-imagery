@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.remote/
+fonts/simhei.ttf
+data_src/
+data/
+outputs/
+results/*.npz
+node_modules/
+report_build/frames/
+report_build/*.docx
+report_build/*.pdf
