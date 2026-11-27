@@ -1,4 +1,4 @@
-/* HAM10000 实验报告 docx 生成器（简版：题目 + 五章正文，无封面/摘要/目录）
+/* BCI Competition IV 2a 脑电实验报告 docx 生成器（简版：题目 + 五章正文，无封面/摘要/目录）
  * 内容来自 report_build/content.json
  */
 const {

@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: ["main", "opt/**"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  lint-and-test:
+    name: 代码规范与单元测试（Python ${{ matrix.python-version }}）
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - name: 检出仓库代码
+        uses: actions/checkout@v4
+
+      - name: 配置 Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: 安装测试与科学计算依赖（CPU PyTorch 以加速 CI）
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy scipy scikit-learn matplotlib mne pytest ruff
+          pip install --index-url https://download.pytorch.org/whl/cpu torch
+
+      - name: 运行 Ruff 静态代码检查
+        run: ruff check src tests report_build/patch_footers.py
+
+      - name: 运行离线自动化测试套件
+        run: pytest -v
